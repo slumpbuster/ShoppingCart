@@ -29,7 +29,7 @@ This was done as an assignment in the MIT course - Full Stack Development with M
 ---------
 
 ## Files 
-- **/index.html** - Start-up file to be opened by browse 
+- **/index.html** - Start-up file to be opened by browser
 - **/shop.js** - Contains the React code to build the stores items, the code to manage the inventory, the code to manage the shopping cart, and Render ReactDOM
 
 ---------
