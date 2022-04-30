@@ -2,7 +2,7 @@
 <img src="./shoppingCart.png" height="400px" width="400px"/>
 
 ## Description 
-This is a simple Shopping Cart using react to create and manage a todo list. A list of items sold are presented as buttons with the correlating stock next to it.
+This is a simple Shopping Cart using react to create and manage a shopping list and inventory. A list of items sold are presented as buttons with the correlating stock next to it.
 
 ## Purpose 
 This was done as an assignment in the MIT course - Full Stack Development with Mern
