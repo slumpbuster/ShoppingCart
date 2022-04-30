@@ -1,5 +1,5 @@
 # Shopping Cart
-<img src="./shoppingCart.png" height="400px" width="400px"/>
+<img src="./shoppingCart.PNG" height="400px" width="400px"/>
 
 ## Description 
 This is a simple Shopping Cart using react to create and manage a shopping list and inventory. A list of items sold are presented as buttons with the correlating stock next to it.
