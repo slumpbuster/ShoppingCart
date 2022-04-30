@@ -1,4 +1,5 @@
 # Shopping Cart
+<img src="./shoppingCart.png" height="400px" width="400px"/>
 
 ## Description 
 This is a simple Shopping Cart using react to create and manage a todo list. A list of items sold are presented as buttons with the correlating stock next to it.
@@ -30,7 +31,8 @@ This was done as an assignment in the MIT course - Full Stack Development with M
 
 ## Files 
 - **/index.html** - Start-up file to be opened by browser
-- **/shop.js** - Contains the React code to build the stores items, the code to manage the inventory, the code to manage the shopping cart, and Render ReactDOM
+- **/cart.js** - Contains the React code to build the stores items, the code to manage the inventory, the code to manage the shopping cart, and Render ReactDOM
+- **/shoppingCart.png** - Screenshot for Readme
 
 ---------
 
@@ -39,3 +41,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 [The MIT License (MIT)](https://github.com/slumpbuster/Formik/blob/main/LICENSE)
+
+---------
+
+## Return to [Slumpbuster Portfolio](https://slumpbuster.github.io/#portfolio)
