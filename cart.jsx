@@ -105,14 +105,15 @@ const Products = (props) => {
   const addToCart = (e) => {
     let name = e.target.name;
     let item = [];
-    for (let i=0; i<items.length; i++) {
-      if (items[i].name == name) {
-        if (items[i].instock === 0) {
-          alert(`${items[i].name} is currently out of stock`);
+    let newItems = [...items];  
+    for (let i=0; i<newItems.length; i++) {
+      if (newItems[i].name == name) {
+        if (newItems[i].instock === 0) {
+          alert(`${newItems[i].name} is currently out of stock`);
           break;
         } else {
-          item.push(items[i]);
-          items[i].instock -= 1;
+          item.push(newItems[i]);
+          newItems[i].instock -= 1;
           break;
         }
       }
@@ -120,13 +121,13 @@ const Products = (props) => {
     //let item = items.filter((item) => item.name == name);
     console.log(`add to Cart ${JSON.stringify(item)}`);
     
-    setItems[items];
+    setItems[newItems];
     setCart([...cart, ...item]);
     //doFetch(query);
   };
   const deleteCartItem = (index) => {
     let newCart = [...cart];
-    let newItems = [...items];    
+    let newItems = [...items];
     for (let i=0; i<newItems.length; i++) {
       if (newItems[i].name == newCart[index].name) {
         newItems[i].instock += 1;
@@ -134,7 +135,7 @@ const Products = (props) => {
         break;
       }
     }
-    setItems[items];
+    setItems[newItems];
     setCart(newCart);
   };
   
