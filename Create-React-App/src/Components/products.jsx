@@ -1,3 +1,13 @@
+import React, { useState, useEffect, useReducer } from "react";
+import axios from "axios";
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Image
+} from "react-bootstrap";
+
 // simulate getting products from DataBase
 const products = [
   { name: "Apples",  country: "Italy", cost: 3, instock: 10 },
@@ -8,17 +18,7 @@ const products = [
 ];
 const photos = Array(products.length).fill(1).map((x, y) => `https://picsum.photos/id/${(Math.ceil(Math.random()*100+(449+x+y)))}/50/50`);//["apple.png", "orange.png", "beans.png", "cabbage.png"];
 
-//=========Cart=============
-const Cart = (props) => {
-  const { Card, Accordion, Button } = ReactBootstrap;
-  let data = props.location.data ? props.location.data : products;
-  console.log(`data:${JSON.stringify(data)}`);
-
-  return <Accordion defaultActiveKey="0">{list}</Accordion>;
-};
-
 const useDataApi = (initialUrl, initialData) => {
-  const { useState, useEffect, useReducer } = React;
   const [url, setUrl] = useState(initialUrl);
 
   const [state, dispatch] = useReducer(dataFetchReducer, {
@@ -78,23 +78,11 @@ const dataFetchReducer = (state, action) => {
 };
 
 const Products = (props) => {
-  const [items, setItems] = React.useState(products);
-  const [cart, setCart] = React.useState([]);
-  const [total, setTotal] = React.useState(0);
-  const {
-    Card,
-    Accordion,
-    Button,
-    Container,
-    Row,
-    Col,
-    Image,
-    Input,
-  } = ReactBootstrap;
+  const [items, setItems] = useState(products);
+  const [cart, setCart] = useState([]);
   //  Fetch Data
-  const { Fragment, useState, useEffect, useReducer } = React;
   const [query, setQuery] = useState("products");
-  const [{ data, isLoading, isError }, doFetch] = useDataApi(
+  const [{ data }, doFetch] = useDataApi(
     "http://localhost:1337/api/products",
     {
       data: [],
@@ -107,7 +95,7 @@ const Products = (props) => {
     let item = [];
     let newItems = [...items];  
     for (let i=0; i<newItems.length; i++) {
-      if (newItems[i].name == name) {
+      if (newItems[i].name === name) {
         if (newItems[i].instock === 0) {
           alert(`${newItems[i].name} is currently out of stock`);
           break;
@@ -121,7 +109,7 @@ const Products = (props) => {
     //let item = items.filter((item) => item.name == name);
     console.log(`add to Cart ${JSON.stringify(item)}`);
     
-    setItems[newItems];
+    setItems([...newItems]);
     setCart([...cart, ...item]);
     //doFetch(query);
   };
@@ -129,13 +117,13 @@ const Products = (props) => {
     let newCart = [...cart];
     let newItems = [...items];
     for (let i=0; i<newItems.length; i++) {
-      if (newItems[i].name == newCart[index].name) {
+      if (newItems[i].name === newCart[index].name) {
         newItems[i].instock += 1;
         newCart.splice(index,1);
         break;
       }
     }
-    setItems[newItems];
+    setItems([...newItems]);
     setCart(newCart);
   };
   
@@ -154,22 +142,20 @@ const Products = (props) => {
     );
   });
   let cartList = cart.map((item, index) => {
+    console.log(index, item.name, item.country)
     return (
-      <Card key={index}>
-        <Card.Header>
-          <Accordion.Toggle as={Button} variant="link" eventKey={1 + index}>
+      <div key={index} className="accordion-item" id={`cart_${index}`}>
+        <h3 className="accordion-header">
+          <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse_${index}`} aria-expanded="true" aria-controls={`collapse_${index}`}>
             {item.name}
-          </Accordion.Toggle>
-        </Card.Header>
-        <Accordion.Collapse
-          onClick={() => deleteCartItem(index)}
-          eventKey={1 + index}
-        >
-          <Card.Body data-toggle="collapse">
+          </button>
+        </h3>
+        <div id={`collapse_${index}`} className="accordion-collapse collapse collapsed" aria-labelledby={`cart_${index}`} data-bs-parent="#cartContents">
+          <div className="accordion-body" onClick={() => deleteCartItem(index)}>
             $ {item.cost} from {item.country}
-          </Card.Body>
-        </Accordion.Collapse>
-      </Card>
+          </div>
+        </div>
+      </div>
     );
   });
 
@@ -220,7 +206,7 @@ const Products = (props) => {
         </Col>
         <Col>
           <h1>Cart Contents</h1>
-          <Accordion>{cartList}</Accordion>
+          <div className="accordion" id="cartContents">{cartList}</div>
         </Col>
         <Col>
           <h1>CheckOut </h1>
@@ -247,5 +233,5 @@ const Products = (props) => {
     </Container>
   );
 };
-// ========================================
-ReactDOM.render(<Products />, document.getElementById("root"));
+
+export default Products;
