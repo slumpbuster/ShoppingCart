@@ -35,7 +35,12 @@ This was done as an assignment in the MIT course - Full Stack Development with M
   - **/cart.js** - Contains the React code to build the stores items, the code to manage the inventory, the code to manage the shopping cart, and Render ReactDOM
   - **/shoppingCart.png** - Screenshot for Readme
 - **/Create-React-App** - React App
-  - **/src/Components.products.jsx** - Contains the React code to build the stores items, the code to manage the inventory, the code to manage the shopping cart, and Render ReactDOM
+  - **/public/index.html** - Start-up file to be opened by browser
+  - **/src/App.css** - Stylesheet file that positions objects, controls text, colors, and layout
+  - **/src/App.js** - Contains the React code to build the stores items, the code to manage the inventory, the code to manage the shopping cart, and Render ReactDOM
+  - **/src/index.css** - Stylesheet file that positions objects, controls text, colors, and layo
+  - **/src/index.js** - Contains the ReactDom
+  - **/src/Components/products.jsx** - Contains the React code to build the stores items, the code to manage the inventory, the code to manage the shopping cart, and Render ReactDOM
 
 ---------
 
