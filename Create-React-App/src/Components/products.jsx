@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 
 // simulate getting products from DataBase
+/*
 const products = [
   { name: "Apples",  country: "Italy", cost: 3, instock: 10 },
   { name: "Oranges", country: "Spain", cost: 4, instock: 3 },
@@ -17,7 +18,7 @@ const products = [
   { name: "Nuts", country: "Brazil",   cost: 8, instock: 3 },
 ];
 const photos = Array(products.length).fill(1).map((x, y) => `https://picsum.photos/id/${(Math.ceil(Math.random()*100+(449+x+y)))}/50/50`);//["apple.png", "orange.png", "beans.png", "cabbage.png"];
-
+*/
 const useDataApi = (initialUrl, initialData) => {
   const [url, setUrl] = useState(initialUrl);
 
@@ -35,6 +36,28 @@ const useDataApi = (initialUrl, initialData) => {
       try {
         const result = await axios.get(url);
         console.log("FETCH FROM URl");
+        /*const result = await axios({
+          url: `${url}/graphql`,
+          method: 'post',
+          data: {
+            query: `
+              query {
+                products {
+                  data {
+                    attributes {
+                      name
+                      country
+                      cost
+                      instock
+                    }
+                  }
+                }
+              }
+            `
+          }
+        }).then((result) => {
+          console.log(result.data)
+        });*/
         if (!didCancel) {
           dispatch({ type: "FETCH_SUCCESS", payload: result.data });
         }
@@ -78,17 +101,21 @@ const dataFetchReducer = (state, action) => {
 };
 
 const Products = (props) => {
-  const [items, setItems] = useState(products);
+  const [items, setItems] = useState([]);//useState([products]);
   const [cart, setCart] = useState([]);
   //  Fetch Data
   const [query, setQuery] = useState("products");
   const [{ data }, doFetch] = useDataApi(
-    "http://localhost:1337/api/products",
-    {
-      data: [],
-    }
+    "http://localhost:1337/api/products",{data: []}
   );
-  console.log(`Rendering Products ${JSON.stringify(data)}`);
+  useEffect(() => {
+    console.log(`Rendering Products ${JSON.stringify(data)}`);
+    let restockItems = data.data.map((item) => {
+      const { name, country, cost, instock } = item.attributes;
+      return { name, country, cost, instock };
+    });
+    setItems(restockItems);
+  }, [data]);
   // Fetch Data
   const addToCart = (e) => {
     let name = e.target.name;
@@ -128,12 +155,13 @@ const Products = (props) => {
   };
   
   let list = items.map((item, index) => {
-    //let n = index + 1049;
-    //let url = "https://picsum.photos/id/" + n + "/50/50";
+    let n = index + 1049;
+    let photos = "https://picsum.photos/id/" + n + "/50/50";
+    //<Image src={photos[index % products.length]} width={70} roundedCircle></Image>
 
     return (
       <li key={index}>
-        <Image src={photos[index % products.length]} width={70} roundedCircle></Image>
+        <Image src={photos} width={70} roundedCircle></Image>
         <Button variant="primary" size="large" style={{ width: "12em"}}>
           {item.name}:{item.cost}-Stock={item.instock}
         </Button>
@@ -142,7 +170,6 @@ const Products = (props) => {
     );
   });
   let cartList = cart.map((item, index) => {
-    console.log(index, item.name, item.country)
     return (
       <div key={index} className="accordion-item" id={`cart_${index}`}>
         <h3 className="accordion-header">
@@ -189,7 +216,6 @@ const Products = (props) => {
     restockItems.map((stockItem, index) => {
       items.map((item) => {
         if (stockItem.name === item.name) {
-          console.log(stockItem.name, stockItem.instock, item.instock)
           stockItem.instock += item.instock;
         }
       })
