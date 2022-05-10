@@ -104,9 +104,9 @@ const Products = (props) => {
   const [items, setItems] = useState([]);//useState([products]);
   const [cart, setCart] = useState([]);
   //  Fetch Data
-  const [query, setQuery] = useState("products");
+  const [query, setQuery] = useState("http://localhost:1337/api/products");
   const [{ data }, doFetch] = useDataApi(
-    "http://localhost:1337/api/products",{data: []}
+    query,{data: []}
   );
   useEffect(() => {
     console.log(`Rendering Products ${JSON.stringify(data)}`);
@@ -244,7 +244,7 @@ const Products = (props) => {
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            restockProducts(`http://localhost:1337/api/${query}`);
+            restockProducts(query);
             console.log(`Restock called on ${query}`);
           }}
         >
