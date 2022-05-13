@@ -248,4 +248,8 @@ const Products = (props) => {
   );
 };
 // ========================================
-ReactDOM.render(<Products />, document.getElementById("root"));
+
+ReactDOM.render(
+  <Products />,
+  document.getElementById("root")
+);
